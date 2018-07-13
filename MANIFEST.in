@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_BedLevelingWizard/templates *
+recursive-include octoprint_BedLevelingWizard/translations *
+recursive-include octoprint_BedLevelingWizard/static *

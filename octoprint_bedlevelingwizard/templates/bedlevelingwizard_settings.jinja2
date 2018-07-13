@@ -1,0 +1,46 @@
+<h4>Bed Leveling Wizard</h4>
+<form class="form-horizontal" id="settings_plugin_bedlevelingwizard_form">
+	<div class="well"><h5>Travel Speeds</h5>
+		<div class="row-fluid">
+			<div class="input-append span3">
+				<label for="speed_xy">X/Y Axes</label>
+				<input class="input-mini text-right" type="number" id="speed_xy" data-bind="value: settingsViewModel.settings.plugins.bedlevelingwizard.speed_xy"/>
+				<div class="add-on">
+					<span class="input-group-text" id="basic-addon2">mm/s</span>
+				</div>
+			</div>
+			<div class="input-append span3">
+				<label for="speed_z_probe">Z Axis</label>
+				<input class="input-mini text-right" type="number" id="speed_z_probe" data-bind="value: settingsViewModel.settings.plugins.bedlevelingwizard.speed_z_probe"/>
+				<div class="add-on">
+					<span class="input-group-text" id="basic-addon2">mm/s</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="well"><h5>Offsets</h5>
+		<div class="row-fluid">
+			<div class="input-append span3">
+				<label for="offset_xy">X/Y Axes</label>
+				<input class="input-mini text-right" type="number" id="offset_xy" step="1" min="0" data-bind="value: settingsViewModel.settings.plugins.bedlevelingwizard.offset_xy"/>
+				<div class="add-on">
+					<span class="input-group-text" id="basic-addon2">mm</span>
+				</div>
+			</div>
+			<div class="input-append span3">
+				<label for="offset_z_travel">Z Travel Height</label>
+				<input class="input-mini text-right" type="number" id="offset_z_travel" step="1" min="0" data-bind="value: settingsViewModel.settings.plugins.bedlevelingwizard.offset_z_travel"/>
+				<div class="add-on">
+					<span class="input-group-text" id="basic-addon2">mm</span>
+				</div>
+			</div>
+			<div class="input-append span3">
+				<label for="offset_z">Z Leveling Height</label>
+				<input class="input-mini text-right" type="number" id="offset_z" step=".1" min="0" data-bind="value: settingsViewModel.settings.plugins.bedlevelingwizard.offset_z"/>
+				<div class="add-on">
+					<span class="input-group-text" id="basic-addon2">mm</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
