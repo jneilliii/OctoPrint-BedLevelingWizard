@@ -53,23 +53,24 @@ $(function() {
 				self.started(true);
 				self.stage('Next');
 				var volume = self.printerProfilesViewModel.currentProfileData().volume;
-				var custom_box = volume.custom_box();
+				var custom_box = volume.custom_box;
 				if(custom_box){
-					var min_x = custom_box["x_min"];
-					var max_x = custom_box["x_max"];
-					var min_y = custom_box["y_min"];
-					var max_y = custom_box["y_max"];		
+					console.log(custom_box);
+					var min_x = parseInt(custom_box.x_min());
+					var max_x = parseInt(custom_box.x_max());
+					var min_y = parseInt(custom_box.y_min());
+					var max_y = parseInt(custom_box.y_max());		
 				} else {
 					var min_x = 0;
-					var max_x = volume.width();
+					var max_x = parseInt(volume.width());
 					var min_y = 0;
-					var max_y = volume.depth();
+					var max_y = parseInt(volume.depth());
 				}
 				
-				self.point_a([min_x + self.offset_xy(),min_y + self.offset_xy()]);
-				self.point_b([max_x - self.offset_xy(),max_y - self.offset_xy()]);
-				self.point_c([max_x - self.offset_xy(),min_y + self.offset_xy()]);
-				self.point_d([min_x + self.offset_xy(),max_y - self.offset_xy()]);
+				self.point_a([min_x + parseInt(self.offset_xy()),min_y + parseInt(self.offset_xy())]);
+				self.point_b([max_x - parseInt(self.offset_xy()),max_y - parseInt(self.offset_xy())]);
+				self.point_c([max_x - parseInt(self.offset_xy()),min_y + parseInt(self.offset_xy())]);
+				self.point_d([min_x + parseInt(self.offset_xy()),max_y - parseInt(self.offset_xy())]);
 				
 				self.gcode_cmds.push('G90');
 				self.gcode_cmds.push('G1 Z'+self.offset_z_travel()+' F'+self.travel_speed_probe());
