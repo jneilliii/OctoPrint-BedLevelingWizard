@@ -52,15 +52,16 @@ $(function() {
 			if(!self.started()){
 				self.started(true);
 				self.stage('Next');
-				var volume = self.printerProfilesViewModel.currentProfileData().volume;
-				var custom_box = volume.custom_box;
-				if(custom_box){
-					console.log(custom_box);
-					var min_x = parseInt(custom_box.x_min());
-					var max_x = parseInt(custom_box.x_max());
-					var min_y = parseInt(custom_box.y_min());
-					var max_y = parseInt(custom_box.y_max());		
+				var volume = self.printerProfilesViewModel.currentProfileData().volume
+				console.log(volume);
+				if(typeof volume.custom_box !== 'function'){
+					console.log('Using custom box options');
+					var min_x = parseInt(volume.custom_box.x_min());
+					var max_x = parseInt(volume.custom_box.x_max());
+					var min_y = parseInt(volume.custom_box.y_min());
+					var max_y = parseInt(volume.custom_box.y_max());		
 				} else {
+					console.log('Using width and depth');
 					var min_x = 0;
 					var max_x = parseInt(volume.width());
 					var min_y = 0;
