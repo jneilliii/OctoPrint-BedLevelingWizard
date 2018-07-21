@@ -48,6 +48,31 @@ $(function() {
 			self.speed_z_probe(self.settingsViewModel.settings.plugins.bedlevelingwizard.speed_z_probe());
 		}
 		
+		self.onAfterBinding = function () {
+			// touchui hack
+			if($('html[id="touch"]').length > 0){
+				$('#touchui_dropdown_link').before('<li id="sidebar_plugin_bedlevelingwizard_wrapper_link" class=""><a href="#sidebar_plugin_bedlevelingwizard" data-toggle="tab"></a></li>');
+				$('#tabs_content').append($('#sidebar_plugin_bedlevelingwizard').addClass('tab-pane'));
+				
+				var $elm = $('#sidebar_plugin_bedlevelingwizard_wrapper_link')			
+				$elm
+					.clone()
+					.attr("id", $elm.attr("id")+"2")
+					.prependTo("#all_touchui_settings > .dropdown-menu")
+					.find("a")
+					.text('Leveling Wizard')
+					.off("click")
+					.on("click", function(e) {
+						$elm.find('a').click();
+						$("#all_touchui_settings").addClass("item_active");
+						e.preventDefault();
+						return false;
+					});
+				$elm.addClass('hidden_touch');
+				$(window).trigger('resize');
+			}
+		}
+		
 		self.start_level = function(){
 			if(!self.started()){
 				self.started(true);
