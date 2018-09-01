@@ -22,9 +22,16 @@ class BedlevelingwizardPlugin(octoprint.plugin.SettingsPlugin,
 
 	def get_assets(self):
 		return dict(
-			js=["js/BedLevelingWizard.js"],
-			css=["css/BedLevelingWizard.css"]
+			js=["js/BedLevelingWizard.js"]
 		)
+		
+	#~~ TemplatePlugin mixin
+
+	def get_template_configs(self):
+		return [
+			dict(type="sidebar", icon="arrows-alt"),
+			dict(type="settings")
+		]
 
 	##~~ Softwareupdate hook
 

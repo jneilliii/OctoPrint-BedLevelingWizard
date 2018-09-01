@@ -48,31 +48,6 @@ $(function() {
 			self.speed_z_probe(self.settingsViewModel.settings.plugins.bedlevelingwizard.speed_z_probe());
 		}
 		
-		self.onAfterBinding = function () {
-			// touchui hack
-			if($('html[id="touch"]').length > 0){
-				$('#touchui_dropdown_link').before('<li id="sidebar_plugin_bedlevelingwizard_wrapper_link" class=""><a href="#sidebar_plugin_bedlevelingwizard" data-toggle="tab"></a></li>');
-				$('#tabs_content').append($('#sidebar_plugin_bedlevelingwizard').addClass('tab-pane'));
-				
-				var $elm = $('#sidebar_plugin_bedlevelingwizard_wrapper_link')			
-				$elm
-					.clone()
-					.attr("id", $elm.attr("id")+"2")
-					.prependTo("#all_touchui_settings > .dropdown-menu")
-					.find("a")
-					.text('Leveling Wizard')
-					.off("click")
-					.on("click", function(e) {
-						$elm.find('a').click();
-						$("#all_touchui_settings").addClass("item_active");
-						e.preventDefault();
-						return false;
-					});
-				$elm.addClass('hidden_touch');
-				$(window).trigger('resize');
-			}
-		}
-		
 		self.start_level = function(){
 			if(!self.started()){
 				self.started(true);
@@ -97,6 +72,20 @@ $(function() {
 				self.point_b([max_x - parseInt(self.offset_xy()),max_y - parseInt(self.offset_xy())]);
 				self.point_c([max_x - parseInt(self.offset_xy()),min_y + parseInt(self.offset_xy())]);
 				self.point_d([min_x + parseInt(self.offset_xy()),max_y - parseInt(self.offset_xy())]);
+				var stack_bottomleft = {dir1: 'right', dir2: 'up', push: 'top'};
+				self.notify = new PNotify({
+									title: 'Bed Leveling Wizard',
+									text: 'Starting the guided leveling process.  Pre-heat bed and nozzle if desired and verify nozzle is clear of debris. \n\nWhen ready press Next.',
+									type: 'info',
+									hide: false,
+									buttons: {
+										closer: false,
+										sticker: false
+									},
+									addclass: 'stack-bottomleft',
+									stack: stack_bottomleft
+									}
+								);
 				
 				self.gcode_cmds.push('G90');
 				self.gcode_cmds.push('G1 Z'+self.offset_z_travel()+' F'+self.travel_speed_probe());
@@ -111,18 +100,22 @@ $(function() {
 						case 0:
 							self.gcode_cmds.push('G1 X'+self.point_a()[0]+' Y'+self.point_a()[1]+' F'+self.travel_speed());
 							self.gcode_cmds.push('G1 Z'+self.offset_z()+' F'+self.travel_speed_probe());
+							var options = {text: 'You are at the first leveling position.  Adjust the bed to be a height of "0" and press Next.'};
 							break;
 						case 1:
 							self.gcode_cmds.push('G1 X'+self.point_b()[0]+' Y'+self.point_b()[1]+' F'+self.travel_speed());
 							self.gcode_cmds.push('G1 Z'+self.offset_z()+' F'+self.travel_speed_probe());
+							var options = {text: 'You are at the second leveling position.  Adjust the bed to be a height of "0" and press Next.'};
 							break;
 						case 2:
 							self.gcode_cmds.push('G1 X'+self.point_c()[0]+' Y'+self.point_c()[1]+' F'+self.travel_speed());
 							self.gcode_cmds.push('G1 Z'+self.offset_z()+' F'+self.travel_speed_probe());
+							var options = {text: 'You are at the third leveling position.  Adjust the bed to be a height of "0" and press Next.'};
 							break;
 						case 3:
 							self.gcode_cmds.push('G1 X'+self.point_d()[0]+' Y'+self.point_d()[1]+' F'+self.travel_speed());
 							self.gcode_cmds.push('G1 Z'+self.offset_z()+' F'+self.travel_speed_probe());
+							var options = {text: 'You are at the fourth leveling position.  Adjust the bed to be a height of "0" and press Next.'};
 							break;
 						default:
 							console.log('something went wrong');
@@ -130,6 +123,7 @@ $(function() {
 					
 					if(self.current_point() == 7) {						
 						self.stage('Finish');
+						var options = {text: 'You are at the fourth and final leveling position.  Adjust the bed to be a height of "0" and press Finish to home X and Y axis.'};
 					}
 					
 					self.current_point(self.current_point()+1);
@@ -138,12 +132,14 @@ $(function() {
 				self.gcode_cmds.push('G90');
 				self.gcode_cmds.push('G1 Z'+self.offset_z_travel()+' F'+self.travel_speed_probe());
 				self.gcode_cmds.push('G28 X0 Y0');
+				var options = {text: 'Guided leveling process complete.  Thank you for using the Bed Leveling Wizard.'};
 				self.stop_level();
 			}
 			
 			console.log('sending commands for point '+self.current_point()+': '+self.gcode_cmds());
 			OctoPrint.control.sendGcode(self.gcode_cmds());
 			self.gcode_cmds([]);
+			self.notify.update(options);
 		}
 		
 		self.stop_level = function(){
@@ -151,6 +147,8 @@ $(function() {
 			self.started(false);
 			self.stage('Start');
 			self.current_point(0);
+			var options = {hide: true};
+			self.notify.update(options);
 		}
 
     }
