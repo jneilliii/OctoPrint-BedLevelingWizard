@@ -15,7 +15,9 @@ class BedlevelingwizardPlugin(octoprint.plugin.SettingsPlugin,
 			speed_z_probe=20,
 			offset_xy=10,
 			offset_z=0.1,
-			offset_z_travel=10
+			offset_z_travel=10,
+			use_custom_points=False,
+			custom_points=[]
 		)
 
 	##~~ AssetPlugin mixin

@@ -1,14 +1,14 @@
 <div class="row-fluid">
 	<div class="input-append span6">
-		<label for="offset_xy">X/Y Offset</label>
-		<input class="input-mini text-right" type="number" id="offset_xy" step="1" min="0" data-bind="value: offset_xy"/>
+		<label for="offset_z">Z Leveling Height</label>
+		<input class="input-mini text-right" type="number" id="offset_z" step=".1" min="0" data-bind="value: offset_z,disable: started()"/>
 		<div class="add-on">
 			<span class="input-group-text" id="basic-addon2">mm</span>
 		</div>
 	</div>
 	<div class="input-append span6">
 		<label for="speed_xy">X/Y Speed</label>
-		<input class="input-mini text-right" type="number" id="speed_xy" data-bind="value: speed_xy"/>
+		<input class="input-mini text-right" type="number" id="speed_xy" data-bind="value: speed_xy,disable: started()"/>
 		<div class="add-on">
 			<span class="input-group-text" id="basic-addon2">mm/s</span>
 		</div>
@@ -17,29 +17,32 @@
 <div class="row-fluid">
 	<div class="input-append span6">
 		<label for="offset_z_travel">Z Travel Height</label>
-		<input class="input-mini text-right" type="number" id="offset_z_travel" step="1" min="0" data-bind="value: offset_z_travel"/>
+		<input class="input-mini text-right" type="number" id="offset_z_travel" step="1" min="0" data-bind="value: offset_z_travel,disable: started()"/>
 		<div class="add-on">
 			<span class="input-group-text" id="basic-addon2">mm</span>
 		</div>
 	</div>
 	<div class="input-append span6">
 		<label for="speed_z_probe">Z Speed</label>
-		<input class="input-mini text-right" type="number" id="speed_z_probe" data-bind="value: speed_z_probe"/>
+		<input class="input-mini text-right" type="number" id="speed_z_probe" data-bind="value: speed_z_probe,disable: started()"/>
 		<div class="add-on">
 			<span class="input-group-text" id="basic-addon2">mm/s</span>
 		</div>
 	</div>
 </div>
-<div class="row-fluid">
+<div class="row-fluid" data-bind="visible: !settingsViewModel.settings.plugins.bedlevelingwizard.use_custom_points()"  style="display: none;">
 	<div class="input-append span6">
-		<label for="offset_z">Z Leveling Height</label>
-		<input class="input-mini text-right" type="number" id="offset_z" step=".1" min="0" data-bind="value: offset_z"/>
+		<label for="offset_xy">X/Y Offset</label>
+		<input class="input-mini text-right" type="number" id="offset_xy" step="1" min="0" data-bind="value: offset_xy"/>
 		<div class="add-on">
 			<span class="input-group-text" id="basic-addon2">mm</span>
 		</div>
 	</div>
-	<div class="span6" style="padding-top: 25px;">
-		<button class="btn btn-primary" data-bind="click:function(){start_level();}, text:stage, enable: controlViewModel.isOperational() && !controlViewModel.isPrinting() && !controlViewModel.isPaused() && loginStateViewModel.isUser()">Start</button>
-		<button class="btn btn-danger" data-bind="enable: started(), click:function(){stop_level();}">Stop</button>
-	</div>
+</div>
+<div class="row-fluid" data-bind="visible: settingsViewModel.settings.plugins.bedlevelingwizard.use_custom_points" style="display: none;">
+	<div class="row-fluid">Using custom points, configure points in settings.</div>
+</div>
+<div class="row-fluid text-center" style="padding-top: 20px;">
+	<button class="btn btn-primary" data-bind="click:function(){start_level();}, text:stage, enable: controlViewModel.isOperational() && !controlViewModel.isPrinting() && !controlViewModel.isPaused() && loginStateViewModel.isUser()">Start</button>
+	<button class="btn btn-danger" data-bind="enable: started(), click:function(){stop_level();}">Stop</button>
 </div>

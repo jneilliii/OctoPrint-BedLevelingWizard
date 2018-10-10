@@ -38,6 +38,7 @@ Configure default settings in OctoPrint's settings area.
   - Z Travel Height: Distance between nozzle and height of "0". Used during nozzle movements between calculated leveling positions.
   - Z Speed: Speed of nozzle movements during the transition from "Z Travel Height" to "Z Leveling Height".
   - Z Leveling Height: Distance of nozzle above a Z height of "0".  This is allowed to be adjusted so you can use any known thickness measuring device (ie. gap tool).
+  - Use Custom Points: Allows for entering your own set of custom points to probe during the guided leveling process in lieu of the bed offset based method.
 
 ## Get Help
 
