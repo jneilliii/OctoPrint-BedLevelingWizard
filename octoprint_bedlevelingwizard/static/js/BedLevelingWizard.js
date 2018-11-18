@@ -84,7 +84,10 @@ $(function() {
 											sticker: false
 										},
 										addclass: 'stack-bottomleft',
-										stack: stack_bottomleft
+										stack: stack_bottomleft,
+										nonblock: {
+											nonblock: true
+										}
 										}
 									);
 					
