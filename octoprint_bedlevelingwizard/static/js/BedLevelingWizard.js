@@ -74,20 +74,18 @@ $(function() {
 					self.point_c([max_x - parseInt(self.offset_xy()),min_y + parseInt(self.offset_xy())]);
 					self.point_d([min_x + parseInt(self.offset_xy()),max_y - parseInt(self.offset_xy())]);
 					var stack_bottomleft = {dir1: 'right', dir2: 'up', push: 'top'};
+					var stack_bottomcenter = {"dir1": "up", "dir2": "right", "push": "bottom", "firstpos2": ($(document).width()/2-150)};
 					self.notify = new PNotify({
 										title: 'Bed Leveling Wizard',
 										text: 'Starting the guided leveling process.  Pre-heat bed and nozzle if desired and verify nozzle is clear of debris. \n\nWhen ready press Next.',
 										type: 'info',
 										hide: false,
 										buttons: {
-											closer: false,
+											closer: true,
 											sticker: false
 										},
 										addclass: 'stack-bottomleft',
-										stack: stack_bottomleft,
-										nonblock: {
-											nonblock: true
-										}
+										stack: stack_bottomcenter
 										}
 									);
 					
@@ -125,7 +123,7 @@ $(function() {
 								console.log('something went wrong');
 						}
 						
-						if(self.current_point() == 7) {						
+						if(self.current_point() == 7) {
 							self.stage('Finish');
 							var options = {text: 'You are at the fourth and final leveling position.  Adjust the bed to be a height of "0" and press Finish to home X and Y axis.'};
 						}
@@ -144,17 +142,18 @@ $(function() {
 					self.started(true);
 					self.stage('Next');
 					var stack_bottomleft = {dir1: 'right', dir2: 'up', push: 'top'};
+					var stack_bottomcenter = {"dir1": "up", "dir2": "right", "push": "bottom", "firstpos2": ($(document).width()/2-150)};
 					self.notify = new PNotify({
 										title: 'Bed Leveling Wizard',
 										text: 'Starting the guided leveling process.  Pre-heat bed and nozzle if desired and verify nozzle is clear of debris. \n\nWhen ready press Next.',
 										type: 'info',
 										hide: false,
 										buttons: {
-											closer: false,
+											closer: true,
 											sticker: false
 										},
 										addclass: 'stack-bottomleft',
-										stack: stack_bottomleft
+										stack: stack_bottomcenter
 										}
 									);
 					
