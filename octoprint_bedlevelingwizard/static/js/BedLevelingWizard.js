@@ -89,8 +89,9 @@ $(function() {
 										}
 									);
 					
-					self.gcode_cmds.push('G90');
+					self.gcode_cmds.push('G91');
 					self.gcode_cmds.push('G1 Z'+self.offset_z_travel()+' F'+self.travel_speed_probe());
+					self.gcode_cmds.push('G90');
 					self.gcode_cmds.push('G28');
 					self.gcode_cmds.push('G1 Z'+self.offset_z_travel()+' F'+self.travel_speed_probe());
 				} else if(self.stage() !== 'Finish'){
