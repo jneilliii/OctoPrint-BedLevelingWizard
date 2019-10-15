@@ -41,7 +41,7 @@ Configure default settings in OctoPrint's settings area.
   - Use Custom Points: Allows for entering your own set of custom points to probe during the guided leveling process in lieu of the bed offset based method.
 
 ## Installation on machine with memory < 512 MB.
-If Your Octoprint is installed on machine with 256 MB of ram ( for example Quad Core Orange PI Zero with 256MB RAM ) - you installation could fail during `numpy` compilation. One of the solution is to temporary increase swap size for the installation:
+If Your Octoprint is installed on machine with 256 MB of ram ( for example Quad Core Orange PI Zero with 256MB RAM ) - you installation could fail during `numpy` compilation.  Your memory and swap would be 100% full as well as all CPU's. One of the solution is to temporary increase swap size for the installation:
 
 ```
 sudo fallocate -l 1G /swapfile
