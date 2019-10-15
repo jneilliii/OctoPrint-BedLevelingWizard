@@ -40,6 +40,18 @@ Configure default settings in OctoPrint's settings area.
   - Z Leveling Height: Distance of nozzle above a Z height of "0".  This is allowed to be adjusted so you can use any known thickness measuring device (ie. gap tool).
   - Use Custom Points: Allows for entering your own set of custom points to probe during the guided leveling process in lieu of the bed offset based method.
 
+## Installation on machine with memory < 512 MB.
+If Your Octoprint is installed on machine with 256 MB of ram ( for example Quad Core Orange PI Zero with 256MB RAM ) - you installation could fail during `numpy` compilation. One of the solution is to temporary increase swap size for the installation:
+
+```
+sudo fallocate -l 1G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+```
+
+this would create 1GB temporary swap file that can be used during installation. You can remove it after reboot.
+
 ## Get Help
 
 If you experience issues with this plugin or need assistance please use the issue tracker by clicking issues above.
