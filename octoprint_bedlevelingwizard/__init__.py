@@ -3,9 +3,10 @@ from __future__ import absolute_import
 
 import octoprint.plugin
 
+
 class BedlevelingwizardPlugin(octoprint.plugin.SettingsPlugin,
-                              octoprint.plugin.AssetPlugin,
-                              octoprint.plugin.TemplatePlugin):
+							  octoprint.plugin.AssetPlugin,
+							  octoprint.plugin.TemplatePlugin):
 
 	##~~ SettingsPlugin mixin
 
@@ -17,17 +18,20 @@ class BedlevelingwizardPlugin(octoprint.plugin.SettingsPlugin,
 			offset_z=0.1,
 			offset_z_travel=10,
 			use_custom_points=False,
-			custom_points=[]
+			custom_points=[],
+			start_gcode="G28",
+			end_gcode="G28 X0 Y0"
 		)
 
 	##~~ AssetPlugin mixin
 
 	def get_assets(self):
-		return dict(
-			js=["js/BedLevelingWizard.js"]
-		)
-		
-	#~~ TemplatePlugin mixin
+		return {
+			"js": ["js/BedLevelingWizard.js"],
+			"css": ["css/BedLevelingWizard.css"]
+		}
+
+	# ~~ TemplatePlugin mixin
 
 	def get_template_configs(self):
 		return [
@@ -48,14 +52,26 @@ class BedlevelingwizardPlugin(octoprint.plugin.SettingsPlugin,
 				user="jneilliii",
 				repo="OctoPrint-BedLevelingWizard",
 				current=self._plugin_version,
+				stable_branch=dict(
+					name="Stable", branch="master", comittish=["master"]
+				),
+				prerelease_branches=[
+					dict(
+						name="Release Candidate",
+						branch="rc",
+						comittish=["rc", "master"],
+					)
+				],
 
 				# update method: pip
 				pip="https://github.com/jneilliii/OctoPrint-BedLevelingWizard/archive/{target_version}.zip"
 			)
 		)
 
+
 __plugin_name__ = "Bed Leveling Wizard"
 __plugin_pythoncompat__ = ">=2.7,<4"
+
 
 def __plugin_load__():
 	global __plugin_implementation__
@@ -65,4 +81,3 @@ def __plugin_load__():
 	__plugin_hooks__ = {
 		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
 	}
-
